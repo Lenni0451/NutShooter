@@ -3,14 +3,10 @@ module main
 import gg
 
 struct Input {
-mut:
-	mouse_x f32
-	mouse_y f32
 }
 
-fn mousemove(x f32, y f32, mut game Game) {
-	game.input.mouse_x = x
-	game.input.mouse_y = y
+fn mousedown(x f32, y f32, button gg.MouseButton, mut game Game) {
+	println(button)
 }
 
 fn keydown(key_code gg.KeyCode, modifier gg.Modifier, mut game Game) {

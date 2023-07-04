@@ -1,6 +1,5 @@
 module main
 
-import os
 import gg
 import gx
 
@@ -31,7 +30,7 @@ fn main() {
 		font_bytes_bold: assets_font_bold.to_bytes()
 		frame_fn: render_loop
 		keydown_fn: keydown
-		move_fn: mousemove
+		click_fn: mousedown
 	})
 	game.gg.run()
 }
@@ -46,7 +45,7 @@ fn render_loop(mut game Game) {
 	ctx.begin()
 	match game.game_state {
 		.main_menu {
-			game.renderer.render_text(ctx, half_width+5, 35, game_name, gx.TextCfg{
+			game.renderer.render_text(ctx, half_width + 5, 35, game_name, gx.TextCfg{
 				size: 100
 				bold: true
 				color: gx.dark_green
