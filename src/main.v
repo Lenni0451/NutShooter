@@ -98,7 +98,7 @@ fn render_loop(mut game Game) {
 			game.player.render(mut game)
 
 			now := time.now()
-			if now - game.last_meteor >= 1 * time.second {
+			if now - game.last_meteor >= 500 * time.millisecond {
 				game.last_meteor = now
 				game.meteors << Meteor.new(mut game) or { panic(err) }
 			}

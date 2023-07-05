@@ -5,6 +5,10 @@ import math
 import gx
 import sokol.sapp
 
+const (
+	meteor_speed = f32(300)
+)
+
 enum MeteorStatus {
 	alive
 	dead
@@ -39,7 +43,7 @@ fn Meteor.new(mut game Game) !Meteor {
 		}
 		meteor.y = rand.f32_in_range(0, game.gg.window_size().height)!
 	}
-	meteor.speed = 200 - meteor.size * 4
+	meteor.speed = meteor_speed - meteor.size * 4
 	return meteor
 }
 

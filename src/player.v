@@ -6,7 +6,7 @@ import gx
 
 const (
 	player_radius = f32(25)
-	player_speed  = f32(250)
+	player_speed  = f32(300)
 )
 
 struct Player {
