@@ -72,6 +72,12 @@ fn render_loop(mut game Game) {
 			if Renderer.render_button(ctx, 50, height - 100, width - 100, 50, 'Scale: ${ctx.scale}') {
 				game.input.hovered_button = .scale
 				has_hovered = true
+
+				Renderer.render_text(ctx, ctx.mouse_pos_x + 10, ctx.mouse_pos_y + 10,
+					r"If it's broken choose another one ¯\_:)_/¯", &gx.TextCfg{
+					size: 20
+					color: gx.rgb(255, 255, 0)
+				})
 			}
 			if !has_hovered {
 				game.input.hovered_button = .@none

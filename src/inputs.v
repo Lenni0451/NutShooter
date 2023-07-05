@@ -54,6 +54,13 @@ fn mousedown(x f32, y f32, button gg.MouseButton, mut game Game) {
 			}
 			.game_over {}
 		}
+	} else if button == .right {
+		if game.input.hovered_button == .scale {
+			game.gg.scale -= 0.25
+			if game.gg.scale < 1 {
+				game.gg.scale = 2
+			}
+		}
 	}
 }
 
