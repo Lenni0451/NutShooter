@@ -72,7 +72,7 @@ fn (mut p Player) render_sprite(mut game Game, x f32, y f32, mx f32, my f32) {
 
 	sgl.push_matrix()
 	sgl.translate(x * ctx.scale, y * ctx.scale, 0)
-	sgl.rotate(rotation(ctx, x, y, mx, my), 0, 0, 1)
+	sgl.rotate(rotation(x, y, mx, my, ctx.scale), 0, 0, 1)
 	ctx.draw_rect_filled(-50, -12, 50, 24, gx.green)
 	sgl.pop_matrix()
 	ctx.draw_circle_filled(x, y, player_radius, gx.blue)

@@ -2,6 +2,7 @@ module main
 
 import gg
 import gx
+import time
 
 enum GameState {
 	main_menu
@@ -15,6 +16,9 @@ mut:
 	game_state GameState   = GameState.main_menu
 	input      Input
 	player     &Player = unsafe { nil }
+	enemies    []Enemy
+	score      int
+	last_enemy time.Time
 }
 
 fn main() {
@@ -68,6 +72,17 @@ fn render_loop(mut game Game) {
 		.ingame {
 			game.player.move(mut game)
 			game.player.render(mut game)
+
+			now := time.now()
+			if now - game.last_enemy >= 1 * time.second {
+				game.last_enemy = now
+				game.enemies << Enemy.new(mut game) or { panic(err) }
+			}
+
+			for mut enemy in game.enemies {
+				enemy.move(mut game)
+				enemy.render(mut game)
+			}
 		}
 		.game_over {}
 	}
