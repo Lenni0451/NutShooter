@@ -36,6 +36,17 @@ fn (mut n Nut) move(mut game Game) {
 		|| n.y > game.gg.window_size().height + nut_radius {
 		n.status = .dead
 	}
+
+	if n.status == .alive {
+		for mut meteor in game.meteors {
+			dist := distance(n.x, n.y, meteor.x, meteor.y)
+			if dist < meteor.size + nut_radius {
+				n.status = .dead
+				meteor.status = .dead
+				game.score += 1
+			}
+		}
+	}
 }
 
 fn (mut n Nut) render(mut game Game) {
