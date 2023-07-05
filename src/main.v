@@ -17,6 +17,7 @@ mut:
 	input       Input
 	player      &Player = unsafe { nil }
 	meteors     []Meteor
+	nuts        []Nut
 	score       int
 	last_meteor time.Time
 }
@@ -62,14 +63,34 @@ fn render_loop(mut game Game) {
 				color: gx.green
 				align: gx.HorizontalAlign.center
 			})
+
+			mut has_hovered := false
 			if Renderer.render_button(ctx, 50, height - 175, width - 100, 50, 'Start Game!') {
 				game.input.hovered_button = .start
+				has_hovered = true
 			}
 			if Renderer.render_button(ctx, 50, height - 100, width - 100, 50, 'Scale: ${ctx.scale}') {
 				game.input.hovered_button = .scale
+				has_hovered = true
+			}
+			if !has_hovered {
+				game.input.hovered_button = .@none
 			}
 		}
 		.ingame {
+			mut to_remove := []int{}
+			for i, mut nut in game.nuts {
+				nut.move(mut game)
+				if nut.status == .dead {
+					to_remove << i
+				} else {
+					nut.render(mut game)
+				}
+			}
+			for i in to_remove {
+				game.nuts.delete(i)
+			}
+
 			game.player.move(mut game)
 			game.player.render(mut game)
 
@@ -79,13 +100,14 @@ fn render_loop(mut game Game) {
 				game.meteors << Meteor.new(mut game) or { panic(err) }
 			}
 
-			mut to_remove := []int{}
+			to_remove.clear()
 			for i, mut meteor in game.meteors {
 				meteor.move(mut game)
 				if meteor.status == .dead {
 					to_remove << i
+				} else {
+					meteor.render(mut game)
 				}
-				meteor.render(mut game)
 			}
 			for i in to_remove {
 				game.meteors.delete(i)

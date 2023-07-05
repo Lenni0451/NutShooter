@@ -4,6 +4,7 @@ import gg
 import time
 
 enum Button {
+	@none
 	start
 	scale
 }
@@ -22,14 +23,16 @@ fn mousedown(x f32, y f32, button gg.MouseButton, mut game Game) {
 		match game.game_state {
 			.main_menu {
 				match game.input.hovered_button {
+					.@none {}
 					.start {
 						game.player = &Player{
 							x: game.gg.window_size().width / 2
 							y: game.gg.window_size().height / 2
 						}
 						game.meteors = []Meteor{}
+						game.nuts = []Nut{}
 						game.score = 0
-						game.last_meteor= time.now()
+						game.last_meteor = time.now()
 						game.game_state = .ingame
 					}
 					.scale {
@@ -40,7 +43,9 @@ fn mousedown(x f32, y f32, button gg.MouseButton, mut game Game) {
 					}
 				}
 			}
-			.ingame {}
+			.ingame {
+				game.nuts << Nut.new(mut game)
+			}
 			.game_over {}
 		}
 	}
