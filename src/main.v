@@ -88,6 +88,7 @@ fn render_loop(mut game Game) {
 						nut.render(mut game)
 					}
 				}
+				to_remove.reverse_in_place()
 				for i in to_remove {
 					game.nuts.delete(i)
 				}
@@ -116,6 +117,7 @@ fn render_loop(mut game Game) {
 					meteor.render(mut game)
 				}
 			}
+			to_remove.reverse_in_place()
 			for i in to_remove {
 				game.meteors.delete(i)
 			}
