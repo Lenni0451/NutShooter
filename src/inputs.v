@@ -76,7 +76,9 @@ fn keydown(key_code gg.KeyCode, modifier gg.Modifier, mut game Game) {
 			}
 		}
 		.game_over {
-			game.game_state = .main_menu
+			if key_code == .space {
+				game.game_state = .main_menu
+			}
 		}
 	}
 }

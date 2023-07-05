@@ -136,7 +136,7 @@ fn render_loop(mut game Game) {
 				color: gx.white
 				align: gx.HorizontalAlign.center
 			})
-			Renderer.render_text(ctx, half_width, height - 50, 'Press any key to return to main menu...',
+			Renderer.render_text(ctx, half_width, height - 50, 'Press space to return to main menu...',
 				gx.TextCfg{
 				size: 30
 				color: gx.white
