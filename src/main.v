@@ -14,6 +14,7 @@ mut:
 	gg         &gg.Context = unsafe { nil }
 	game_state GameState   = GameState.main_menu
 	input      Input
+	player     &Player = unsafe { nil }
 }
 
 fn main() {
@@ -63,7 +64,9 @@ fn render_loop(mut game Game) {
 				game.input.hovered_button = .scale
 			}
 		}
-		.ingame {}
+		.ingame {
+			game.player.render(mut game)
+		}
 		.game_over {}
 	}
 	ctx.end()
