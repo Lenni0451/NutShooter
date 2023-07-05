@@ -17,7 +17,7 @@ mut:
 	input       Input
 	player      &Player = unsafe { nil }
 	meteors     []Meteor
-	nuts        []Nut
+	nuts        shared []Nut
 	score       int
 	last_meteor time.Time
 }
@@ -79,16 +79,18 @@ fn render_loop(mut game Game) {
 		}
 		.ingame {
 			mut to_remove := []int{}
-			for i, mut nut in game.nuts {
-				nut.move(mut game)
-				if nut.status == .dead {
-					to_remove << i
-				} else {
-					nut.render(mut game)
+			lock game.nuts {
+				for i, mut nut in game.nuts {
+					nut.move(mut game)
+					if nut.status == .dead {
+						to_remove << i
+					} else {
+						nut.render(mut game)
+					}
 				}
-			}
-			for i in to_remove {
-				game.nuts.delete(i)
+				for i in to_remove {
+					game.nuts.delete(i)
+				}
 			}
 
 			game.player.move(mut game)

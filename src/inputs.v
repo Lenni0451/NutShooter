@@ -30,7 +30,9 @@ fn mousedown(x f32, y f32, button gg.MouseButton, mut game Game) {
 							y: game.gg.window_size().height / 2
 						}
 						game.meteors = []Meteor{}
-						game.nuts = []Nut{}
+						lock game.nuts {
+							game.nuts = []Nut{}
+						}
 						game.score = 0
 						game.last_meteor = time.now()
 						game.game_state = .ingame
@@ -44,7 +46,9 @@ fn mousedown(x f32, y f32, button gg.MouseButton, mut game Game) {
 				}
 			}
 			.ingame {
-				game.nuts << Nut.new(mut game)
+				lock game.nuts {
+					game.nuts << Nut.new(mut game)
+				}
 			}
 			.game_over {}
 		}
