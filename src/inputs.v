@@ -47,23 +47,28 @@ fn mousedown(x f32, y f32, button gg.MouseButton, mut game Game) {
 }
 
 fn keydown(key_code gg.KeyCode, modifier gg.Modifier, mut game Game) {
-	if game.game_state != .ingame {
-		return
-	}
-	match key_code {
-		.w {
-			game.input.w_down = true
+	match game.game_state {
+		.main_menu {}
+		.ingame {
+			match key_code {
+				.w {
+					game.input.w_down = true
+				}
+				.a {
+					game.input.a_down = true
+				}
+				.s {
+					game.input.s_down = true
+				}
+				.d {
+					game.input.d_down = true
+				}
+				else {}
+			}
 		}
-		.a {
-			game.input.a_down = true
+		.game_over {
+			game.game_state = .main_menu
 		}
-		.s {
-			game.input.s_down = true
-		}
-		.d {
-			game.input.d_down = true
-		}
-		else {}
 	}
 }
 

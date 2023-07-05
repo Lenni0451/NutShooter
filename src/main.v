@@ -79,12 +79,43 @@ fn render_loop(mut game Game) {
 				game.enemies << Enemy.new(mut game) or { panic(err) }
 			}
 
-			for mut enemy in game.enemies {
+			mut to_remove := []int{}
+			for i, mut enemy in game.enemies {
 				enemy.move(mut game)
+				if enemy.status == .dead {
+					to_remove << i
+				}
 				enemy.render(mut game)
 			}
+			for i in to_remove {
+				game.enemies.delete(i)
+			}
 		}
-		.game_over {}
+		.game_over {
+			Renderer.render_text(ctx, half_width + 5, 35, 'Game Over', gx.TextCfg{
+				size: 100
+				bold: true
+				color: gx.dark_red
+				align: gx.HorizontalAlign.center
+			})
+			Renderer.render_text(ctx, half_width, 30, 'Game Over', gx.TextCfg{
+				size: 100
+				bold: true
+				color: gx.red
+				align: gx.HorizontalAlign.center
+			})
+			Renderer.render_text(ctx, half_width + 5, 150, 'Score: ${game.score}', gx.TextCfg{
+				size: 50
+				bold: true
+				color: gx.white
+				align: gx.HorizontalAlign.center
+			})
+			Renderer.render_text(ctx, half_width, height - 50, 'Press any key to return to main menu...', gx.TextCfg{
+				size: 30
+				color: gx.white
+				align: gx.HorizontalAlign.center
+			})
+		}
 	}
 	ctx.end()
 }

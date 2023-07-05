@@ -13,9 +13,10 @@ enum EnemyStatus {
 struct Enemy {
 	size f32
 mut:
-	speed f32
-	x     f32
-	y     f32
+	status EnemyStatus = .alive
+	speed  f32
+	x      f32
+	y      f32
 }
 
 fn Enemy.new(mut game Game) !Enemy {
@@ -42,7 +43,10 @@ fn Enemy.new(mut game Game) !Enemy {
 }
 
 fn (mut e Enemy) move(mut game Game) {
-	_ := distance(e.x, e.y, game.player.x, game.player.y)
+	dist := distance(e.x, e.y, game.player.x, game.player.y)
+	if dist <= player_radius + e.size {
+		game.game_state = .game_over
+	}
 
 	angle := f32(math.atan2(game.player.y - e.y, game.player.x - e.x))
 	speed := e.speed * sapp.frame_duration()
