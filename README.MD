@@ -5,11 +5,11 @@ This time it's standalone.
 A small (fun?) game. Mostly a joke.
 
 ## Building
-I am only using Windows so I can only provide instructions for that.
 ### Requirements
- - [V](https://github.com/vlang/v)
- - msvc (Visual Studio C++ compiler)
+[V](https://github.com/vlang/v)\
+Windows: msvc (Visual Studio C++ compiler)\
+Linux: gcc
 
 ### Instructions
-Run `build.bat`. The output will be in the `build` folder.\
-You only need the `nutshooter.exe` file.
+Run `build.bat` or `build.sh` depending on your platform.\
+The output will be in the `build` folder.
