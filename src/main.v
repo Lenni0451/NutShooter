@@ -57,8 +57,12 @@ fn render_loop(mut game Game) {
 				color: gx.green
 				align: gx.HorizontalAlign.center
 			})
-			game.renderer.render_button(ctx, 50, height - 175, width - 100, 50, 'Start Game!')
-			game.renderer.render_button(ctx, 50, height - 100, width - 100, 50, 'Scale: ${ctx.scale}')
+			if game.renderer.render_button(ctx, 50, height - 175, width - 100, 50, 'Start Game!') {
+				game.input.hovered_button = .start
+			}
+			if game.renderer.render_button(ctx, 50, height - 100, width - 100, 50, 'Scale: ${ctx.scale}') {
+				game.input.hovered_button = .scale
+			}
 		}
 		.ingame {}
 		.game_over {}
