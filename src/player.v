@@ -3,7 +3,6 @@ module main
 import sokol.sgl
 import sokol.sapp
 import gx
-import math
 
 const (
 	player_radius = f32(25)
@@ -16,10 +15,9 @@ mut:
 	y f32 [required]
 }
 
-fn (mut p Player) render(mut game Game) {
-	ctx := game.gg
-	width := ctx.window_size().width
-	height := ctx.window_size().height
+fn (mut p Player) move(mut game Game) {
+	width := game.gg.window_size().width
+	height := game.gg.window_size().height
 
 	move_speed := f32(player_speed * sapp.frame_duration())
 	if game.input.w_down {
@@ -47,6 +45,12 @@ fn (mut p Player) render(mut game Game) {
 	if p.y > height {
 		p.y = 0
 	}
+}
+
+fn (mut p Player) render(mut game Game) {
+	ctx := game.gg
+	width := ctx.window_size().width
+	height := ctx.window_size().height
 
 	if p.x <= player_radius {
 		p.render_sprite(mut game, p.x + width, p.y, ctx.mouse_pos_x + width, ctx.mouse_pos_y)

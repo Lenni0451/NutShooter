@@ -66,6 +66,7 @@ fn render_loop(mut game Game) {
 			}
 		}
 		.ingame {
+			game.player.move(mut game)
 			game.player.render(mut game)
 		}
 		.game_over {}
