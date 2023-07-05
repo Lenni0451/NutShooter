@@ -2,6 +2,7 @@ module main
 
 import math
 import gx
+import sokol.sapp
 
 const (
 	nut_radius = 10
@@ -30,8 +31,8 @@ fn Nut.new(mut game Game) Nut {
 }
 
 fn (mut n Nut) move(mut game Game) {
-	n.x += f32(math.cos(n.angle) * 5)
-	n.y += f32(math.sin(n.angle) * 5)
+	n.x += f32(math.cos(n.angle) * 300 * sapp.frame_duration())
+	n.y += f32(math.sin(n.angle) * 300 * sapp.frame_duration())
 	if n.x < -nut_radius || n.x > game.gg.window_size().width + nut_radius || n.y < -nut_radius
 		|| n.y > game.gg.window_size().height + nut_radius {
 		n.status = .dead
