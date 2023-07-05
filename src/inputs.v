@@ -11,11 +11,12 @@ enum Button {
 
 struct Input {
 mut:
-	hovered_button Button
-	w_down         bool
-	a_down         bool
-	s_down         bool
-	d_down         bool
+	hovered_button   Button
+	pressed_anything bool
+	w_down           bool
+	a_down           bool
+	s_down           bool
+	d_down           bool
 }
 
 fn mousedown(x f32, y f32, button gg.MouseButton, mut game Game) {
@@ -46,6 +47,7 @@ fn mousedown(x f32, y f32, button gg.MouseButton, mut game Game) {
 				}
 			}
 			.ingame {
+				game.input.pressed_anything = true
 				lock game.nuts {
 					game.nuts << Nut.new(mut game)
 				}
@@ -61,15 +63,19 @@ fn keydown(key_code gg.KeyCode, modifier gg.Modifier, mut game Game) {
 		.ingame {
 			match key_code {
 				.w {
+					game.input.pressed_anything = true
 					game.input.w_down = true
 				}
 				.a {
+					game.input.pressed_anything = true
 					game.input.a_down = true
 				}
 				.s {
+					game.input.pressed_anything = true
 					game.input.s_down = true
 				}
 				.d {
+					game.input.pressed_anything = true
 					game.input.d_down = true
 				}
 				else {}

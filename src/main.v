@@ -116,6 +116,17 @@ fn render_loop(mut game Game) {
 			for i in to_remove {
 				game.meteors.delete(i)
 			}
+
+			if !game.input.pressed_anything {
+				Renderer.render_text(ctx, 10, height - 50, 'WASD to move', gx.TextCfg{
+					size: 30
+					color: gx.white
+				})
+				Renderer.render_text(ctx, 10, height - 30, 'LMB to shoot', gx.TextCfg{
+					size: 30
+					color: gx.white
+				})
+			}
 		}
 		.game_over {
 			Renderer.render_text(ctx, half_width + 5, 35, 'Game Over', gx.TextCfg{
