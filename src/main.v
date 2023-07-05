@@ -10,7 +10,6 @@ enum GameState {
 }
 
 struct Game {
-	renderer Renderer
 mut:
 	gg         &gg.Context = unsafe { nil }
 	game_state GameState   = GameState.main_menu
@@ -45,22 +44,22 @@ fn render_loop(mut game Game) {
 	ctx.begin()
 	match game.game_state {
 		.main_menu {
-			game.renderer.render_text(ctx, half_width + 5, 35, game_name, gx.TextCfg{
+			Renderer.render_text(ctx, half_width + 5, 35, game_name, gx.TextCfg{
 				size: 100
 				bold: true
 				color: gx.dark_green
 				align: gx.HorizontalAlign.center
 			})
-			game.renderer.render_text(ctx, half_width, 30, game_name, gx.TextCfg{
+			Renderer.render_text(ctx, half_width, 30, game_name, gx.TextCfg{
 				size: 100
 				bold: true
 				color: gx.green
 				align: gx.HorizontalAlign.center
 			})
-			if game.renderer.render_button(ctx, 50, height - 175, width - 100, 50, 'Start Game!') {
+			if Renderer.render_button(ctx, 50, height - 175, width - 100, 50, 'Start Game!') {
 				game.input.hovered_button = .start
 			}
-			if game.renderer.render_button(ctx, 50, height - 100, width - 100, 50, 'Scale: ${ctx.scale}') {
+			if Renderer.render_button(ctx, 50, height - 100, width - 100, 50, 'Scale: ${ctx.scale}') {
 				game.input.hovered_button = .scale
 			}
 		}
