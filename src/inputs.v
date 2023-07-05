@@ -27,9 +27,9 @@ fn mousedown(x f32, y f32, button gg.MouseButton, mut game Game) {
 							x: game.gg.window_size().width / 2
 							y: game.gg.window_size().height / 2
 						}
-						game.enemies = []Enemy{}
+						game.meteors = []Meteor{}
 						game.score = 0
-						game.last_enemy = time.now()
+						game.last_meteor= time.now()
 						game.game_state = .ingame
 					}
 					.scale {

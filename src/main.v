@@ -12,13 +12,13 @@ enum GameState {
 
 struct Game {
 mut:
-	gg         &gg.Context = unsafe { nil }
-	game_state GameState   = GameState.main_menu
-	input      Input
-	player     &Player = unsafe { nil }
-	enemies    []Enemy
-	score      int
-	last_enemy time.Time
+	gg          &gg.Context = unsafe { nil }
+	game_state  GameState   = GameState.main_menu
+	input       Input
+	player      &Player = unsafe { nil }
+	meteors     []Meteor
+	score       int
+	last_meteor time.Time
 }
 
 fn main() {
@@ -74,21 +74,21 @@ fn render_loop(mut game Game) {
 			game.player.render(mut game)
 
 			now := time.now()
-			if now - game.last_enemy >= 1 * time.second {
-				game.last_enemy = now
-				game.enemies << Enemy.new(mut game) or { panic(err) }
+			if now - game.last_meteor >= 1 * time.second {
+				game.last_meteor = now
+				game.meteors << Meteor.new(mut game) or { panic(err) }
 			}
 
 			mut to_remove := []int{}
-			for i, mut enemy in game.enemies {
-				enemy.move(mut game)
-				if enemy.status == .dead {
+			for i, mut meteor in game.meteors {
+				meteor.move(mut game)
+				if meteor.status == .dead {
 					to_remove << i
 				}
-				enemy.render(mut game)
+				meteor.render(mut game)
 			}
 			for i in to_remove {
-				game.enemies.delete(i)
+				game.meteors.delete(i)
 			}
 		}
 		.game_over {
@@ -110,7 +110,8 @@ fn render_loop(mut game Game) {
 				color: gx.white
 				align: gx.HorizontalAlign.center
 			})
-			Renderer.render_text(ctx, half_width, height - 50, 'Press any key to return to main menu...', gx.TextCfg{
+			Renderer.render_text(ctx, half_width, height - 50, 'Press any key to return to main menu...',
+				gx.TextCfg{
 				size: 30
 				color: gx.white
 				align: gx.HorizontalAlign.center

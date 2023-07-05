@@ -5,44 +5,44 @@ import math
 import gx
 import sokol.sapp
 
-enum EnemyStatus {
+enum MeteorStatus {
 	alive
 	dead
 }
 
-struct Enemy {
+struct Meteor {
 	size f32
 mut:
-	status EnemyStatus = .alive
+	status MeteorStatus = .alive
 	speed  f32
 	x      f32
 	y      f32
 }
 
-fn Enemy.new(mut game Game) !Enemy {
-	mut enemy := Enemy{
+fn Meteor.new(mut game Game) !Meteor {
+	mut meteor := Meteor{
 		size: rand.f32_in_range(20, 40)!
 	}
 	if rand.bernoulli(0.5)! {
-		enemy.x = rand.f32_in_range(0, game.gg.window_size().width)!
-		enemy.y = if rand.bernoulli(0.5)! {
-			-enemy.size
+		meteor.x = rand.f32_in_range(0, game.gg.window_size().width)!
+		meteor.y = if rand.bernoulli(0.5)! {
+			-meteor.size
 		} else {
-			game.gg.window_size().height + enemy.size
+			game.gg.window_size().height + meteor.size
 		}
 	} else {
-		enemy.x = if rand.bernoulli(0.5)! {
-			-enemy.size
+		meteor.x = if rand.bernoulli(0.5)! {
+			-meteor.size
 		} else {
-			game.gg.window_size().width + enemy.size
+			game.gg.window_size().width + meteor.size
 		}
-		enemy.y = rand.f32_in_range(0, game.gg.window_size().height)!
+		meteor.y = rand.f32_in_range(0, game.gg.window_size().height)!
 	}
-	enemy.speed = 200 - enemy.size * 4
-	return enemy
+	meteor.speed = 200 - meteor.size * 4
+	return meteor
 }
 
-fn (mut e Enemy) move(mut game Game) {
+fn (mut e Meteor) move(mut game Game) {
 	dist := distance(e.x, e.y, game.player.x, game.player.y)
 	if dist <= player_radius + e.size {
 		game.game_state = .game_over
@@ -54,6 +54,6 @@ fn (mut e Enemy) move(mut game Game) {
 	e.y += f32(math.sin(angle) * speed)
 }
 
-fn (mut e Enemy) render(mut game Game) {
+fn (mut e Meteor) render(mut game Game) {
 	game.gg.draw_circle_filled(e.x, e.y, e.size, gx.red)
 }
