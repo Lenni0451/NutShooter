@@ -30,6 +30,7 @@ fn main() {
 		font_bytes_bold: assets_font_bold.to_bytes()
 		frame_fn: render_loop
 		keydown_fn: keydown
+		keyup_fn: keyup
 		click_fn: mousedown
 	})
 	game.gg.run()
