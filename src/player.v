@@ -18,6 +18,8 @@ mut:
 
 fn (mut p Player) render(mut game Game) {
 	ctx := game.gg
+	width := ctx.window_size().width
+	height := ctx.window_size().height
 
 	move_speed := f32(player_speed * sapp.frame_duration())
 	if game.input.w_down {
@@ -34,18 +36,30 @@ fn (mut p Player) render(mut game Game) {
 	}
 
 	if p.x < 0 {
-		p.x = ctx.window_size().width
+		p.x = width
 	}
-	if p.x > ctx.window_size().width {
+	if p.x > width {
 		p.x = 0
 	}
 	if p.y < 0 {
-		p.y = ctx.window_size().height
+		p.y = height
 	}
-	if p.y > ctx.window_size().height {
+	if p.y > height {
 		p.y = 0
 	}
 
+	if p.x <= player_radius {
+		p.render_sprite(mut game, p.x + width, p.y, ctx.mouse_pos_x + width, ctx.mouse_pos_y)
+	}
+	if p.x >= width - player_radius {
+		p.render_sprite(mut game, p.x - width, p.y, ctx.mouse_pos_x - width, ctx.mouse_pos_y)
+	}
+	if p.y <= player_radius {
+		p.render_sprite(mut game, p.x, p.y + height, ctx.mouse_pos_x, ctx.mouse_pos_y + height)
+	}
+	if p.y >= height - player_radius {
+		p.render_sprite(mut game, p.x, p.y - height, ctx.mouse_pos_x, ctx.mouse_pos_y - height)
+	}
 	p.render_sprite(mut game, p.x, p.y, ctx.mouse_pos_x, ctx.mouse_pos_y)
 }
 
