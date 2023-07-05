@@ -106,6 +106,9 @@ fn render_loop(mut game Game) {
 			for i, mut meteor in game.meteors {
 				if meteor.status == .alive {
 					meteor.move(mut game)
+					if meteor.status == .ended {
+						return
+					}
 				}
 				if meteor.status == .dead {
 					to_remove << i

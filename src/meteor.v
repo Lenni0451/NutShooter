@@ -8,6 +8,7 @@ import sokol.sapp
 enum MeteorStatus {
 	alive
 	dead
+	ended
 }
 
 struct Meteor {
@@ -42,16 +43,18 @@ fn Meteor.new(mut game Game) !Meteor {
 	return meteor
 }
 
-fn (mut e Meteor) move(mut game Game) {
-	dist := distance(e.x, e.y, game.player.x, game.player.y)
-	if dist <= player_radius + e.size {
+fn (mut m Meteor) move(mut game Game) {
+	dist := distance(m.x, m.y, game.player.x, game.player.y)
+	if dist <= player_radius + m.size {
 		game.game_state = .game_over
+		m.status = .ended
+		return
 	}
 
-	angle := f32(math.atan2(game.player.y - e.y, game.player.x - e.x))
-	speed := e.speed * sapp.frame_duration()
-	e.x += f32(math.cos(angle) * speed)
-	e.y += f32(math.sin(angle) * speed)
+	angle := f32(math.atan2(game.player.y - m.y, game.player.x - m.x))
+	speed := m.speed * sapp.frame_duration()
+	m.x += f32(math.cos(angle) * speed)
+	m.y += f32(math.sin(angle) * speed)
 }
 
 fn (mut e Meteor) render(mut game Game) {

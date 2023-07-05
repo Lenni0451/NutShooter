@@ -39,6 +39,10 @@ fn (mut n Nut) move(mut game Game) {
 
 	if n.status == .alive {
 		for mut meteor in game.meteors {
+			if meteor.status == .dead {
+				continue
+			}
+
 			dist := distance(n.x, n.y, meteor.x, meteor.y)
 			if dist < meteor.size + nut_radius {
 				n.status = .dead
