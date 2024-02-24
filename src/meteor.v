@@ -5,9 +5,7 @@ import math
 import gx
 import sokol.sapp
 
-const (
-	meteor_speed = f32(300)
-)
+const meteor_speed = f32(300)
 
 enum MeteorStatus {
 	alive

@@ -4,15 +4,13 @@ import sokol.sgl
 import sokol.sapp
 import gx
 
-const (
-	player_radius = f32(25)
-	player_speed  = f32(300)
-)
+const player_radius = f32(25)
+const player_speed = f32(300)
 
 struct Player {
 mut:
-	x f32 [required]
-	y f32 [required]
+	x f32 @[required]
+	y f32 @[required]
 }
 
 fn (mut p Player) move(mut game Game) {

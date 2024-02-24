@@ -4,10 +4,8 @@ import math
 import gx
 import sokol.sapp
 
-const (
-	nut_radius = f32(10)
-	nut_speed  = f32(425)
-)
+const nut_radius = f32(10)
+const nut_speed = f32(425)
 
 enum NutStatus {
 	alive
